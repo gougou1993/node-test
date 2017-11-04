@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  .row.detail
+    .col-md-4 
+      .thumbnail
+          a(href="/detail/#{movie.id}")
+            img(src="#{movie.poster}", alt="#{movie.title}")
+    .col-md-8
+      h1= movie.title
+      ul.detail-info
+        li.detail-info-item
+         b 导　演：
+         span= movie.doctor
+        li.detail-info-item
+         b 地　区：
+         span= movie.country
+        li.detail-info-item
+         b 年　份：
+         span= movie.year
+      form.detail-comment(action='/detail/content/#{movie.id}', method='post')
+        .form-group
+          label.detail-comment-captain 评　论：
+          textarea(rows="4", name='content', placeholder="说点什么吧").form-control
+        div.form-footer
+          button(type="button")#submitBtn.btn.btn-primary 发表
+  script.
+    $('#submitBtn').on('click', function(){
+      var contentBox = $('textarea[name="content"]');
+      $.post('/detail/content/' + #{movie.id},
+      {
+        content: contentBox.val()
+      });
+      contentBox.val('');
+      alert('评论成功');
+    });
+      

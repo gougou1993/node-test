@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  .row.main-list
+    each item in movies
+      .col-md-2
+        .thumbnail
+          a(href="/detail/#{item.id}")
+            img(src="#{item.poster}", alt="#{item.title}")
+          .caption
+            h4.caption-title #{item.title}
+            div.caption-btn
+              a.btn.btn-primary.btn-sm(href="/detail/#{item.id}", role="button") 查看详情

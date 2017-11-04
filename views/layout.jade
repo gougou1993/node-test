@@ -1,0 +1,30 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/lib/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/reset.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/lib/jquery/dist/jquery.min.js')
+    script(src='/lib/bootstrap/dist/js/bootstrap.min.js')
+  body
+    .wrap
+      block header
+        nav.navbar.navbar-inverse.navbar-fixed-top
+          .container-fluid
+            .navbar-header
+              a.navbar-brand(href='http://www.wisewrong.com/', target='_blank') WiseWrong
+            ul.nav.navbar-nav
+              - var navs = [{name: '首页', index: '/index'}, {name: '评论', index: '/list'}]
+              each nav in navs
+                li(class="#{nav.index === activeIndex ? 'active' : ''}")
+                  a(href=nav.index)= nav.name
+      .content.container
+        block content
+    block footer
+      footer#footer
+        ul
+          - var tags = ['琉璃之金', '朦胧之森', '雷霆之滔', '逍遥之火', '璀璨之沙']
+          each tag in tags
+            li= tag
+        p Copyright © <a href='http://www.wisewrong.com/' target='_blank'>十年八月</a> - 2017 All rights reserved
