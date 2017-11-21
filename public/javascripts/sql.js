@@ -1,14 +1,15 @@
 var mssql = require('mssql');
 
 var config = {
-  user: 'wise',
-  password: 'wisewrong',
-  server: 'wisewrong.com',
+  user: 'sa',
+  password: 'sa123456',
+  server: 'localhost',
   database: 'wise'
 };
 
 var sql = {};
 function wiseSql(sqltext, res) {
+  mssql.close();
   return new Promise(function (resolve, reject) {
     mssql.connect(config).then(function () {
       // Query
@@ -26,25 +27,27 @@ function wiseSql(sqltext, res) {
   })
 }
 
-sql.list = function (res, sqltext, code, template, data) {
+sql.list = function (res, sqltext, callback) {
   wiseSql(sqltext, res).then(result => {
-    data[code] = result.recordset;
-    res.render(template, data);
+    callback(result.recordset);
   })
 }
 
-sql.detail = function (res, sqltext, code, template, data) {
+sql.detail = function (res, sqltext, callback) {
   wiseSql(sqltext, res).then(result => {
-    data[code] = result.recordset[0];
-    res.render(template, data);
+    callback(result.recordsets)
   })
 }
 
-sql.add = function (res, sqltext) {
+sql.add = function (res, sqltext, callback) {
   wiseSql(sqltext, res).then(result => {
-    console.log('评论成功');
-    res.status(200).end();
+    callback(result.recordset)
   })
+}
+
+// 防刷
+sql.check = function (req) {
+  console.log(req)
 }
 
 module.exports = sql;

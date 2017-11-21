@@ -1,12 +1,11 @@
 doctype html
 html
   head
+    link(rel='shortcut icon', type="image/x-icon", href='/favicon.ico')
     title= title
-    link(rel='stylesheet', href='/lib/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/reset.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
-    script(src='/lib/jquery/dist/jquery.min.js')
-    script(src='/lib/bootstrap/dist/js/bootstrap.min.js')
   body
     .wrap
       block header
@@ -19,6 +18,13 @@ html
               each nav in navs
                 li(class="#{nav.index === activeIndex ? 'active' : ''}")
                   a(href=nav.index)= nav.name
+            block headerForm
+              form.navbar-form.navbar-right
+                .input-group#globalSearch
+                  input(type="text", name="search", placeholder="请输入电影名称").form-control
+                  span.input-group-btn
+                    button(type="button").btn.btn-default
+                      i.glyphicon.glyphicon-search
       .content.container
         block content
     block footer
@@ -27,4 +33,9 @@ html
           - var tags = ['琉璃之金', '朦胧之森', '雷霆之滔', '逍遥之火', '璀璨之沙']
           each tag in tags
             li= tag
-        p Copyright © <a href='http://www.wisewrong.com/' target='_blank'>十年八月</a> - 2017 All rights reserved
+        p Copyright © <a href='http://www.cnblogs.com/wisewrong/' target='_blank'>十年八月</a> - 2017 All rights reserved
+    include search
+  script(src='https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js')
+  script(src='https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js')
+  script(src='/javascripts/common.js')
+  script(src='/javascripts/wise.js')

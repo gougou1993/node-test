@@ -4,9 +4,9 @@ block content
   .row.main-list
     each item in movies
       .col-md-2
-        .thumbnail
-          a(href="/detail/#{item.id}")
-            img(src="#{item.poster}", alt="#{item.title}")
+        .thumbnail.card
+          a(href="/detail/#{item.id}", title="#{item.title}")
+            img(src="/images/#{item.poster}", alt="#{item.title}")
           .caption
             h4.caption-title #{item.title}
             div.caption-btn

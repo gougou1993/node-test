@@ -4,19 +4,16 @@ var sql = require('../public/javascripts/sql');
 
 /* GET detail page. */
 router.get('/:id', function(req, res, next) {
-  sql.detail(res, 'select * from Movies_List where id = '+req.params.id, 'movie', 'detail', {
-    title: '影片详情',
-    activeIndex: '/detail',
-    movie: {}
-  })
-});
-
-router.post('/content/:id', function(req, res) {
-  var formData = req.body;
-  formData.address = req.ip;
-  formData.movieId = req.params.id;
-  var sqltext = "INSERT INTO [Content_List]([address],[content],[movieId]) VALUES ('" + formData.address + "','" + formData.content + "','" + formData.movieId + "')";
-  sql.add(res, sqltext);
+  var sqlText = 'select * from Movies_List where id = '+req.params.id+';select * from Movie_Links where movieId = '+req.params.id;
+  sql.detail(res, sqlText, function(result) {
+    var data = result[0][0];
+    data.links = result[1];
+    res.render('detail', {
+      title: '影片详情',
+      activeIndex: '/detail',
+      movie: data
+    });
+  });
 });
 
 module.exports = router;
